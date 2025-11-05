@@ -1,0 +1,204 @@
+{
+  "entities": [
+    {
+      "name": "Customer",
+      "created_at": false,
+      "updated_at": false,
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "last_name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "email",
+          "type": "varchar",
+          "nullable": false,
+          "isUnique": true,
+          "isIndex": true
+        },
+        {
+          "name": "phone_number",
+          "type": "varchar",
+          "nullable": true,
+          "isIndex": false,
+          "isUnique": true
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "email"
+          ],
+          "unique": true
+        }
+      ],
+      "uniques": []
+    },
+    {
+      "name": "Product",
+      "created_at": false,
+      "updated_at": false,
+      "fields": [
+        {
+          "name": "name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "price",
+          "type": "decimal",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "stock_quantity",
+          "type": "integer",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        }
+      ],
+      "indexes": [],
+      "uniques": []
+    },
+    {
+      "name": "Order",
+      "created_at": false,
+      "updated_at": false,
+      "fields": [
+        {
+          "name": "order_date",
+          "type": "timestamp",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "status",
+          "type": "varchar",
+          "nullable": false,
+          "default": "'pending'",
+          "values": [
+            "pending",
+            "completed",
+            "canceled"
+          ],
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "total_amount",
+          "type": "decimal",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "customer_id",
+          "type": "integer",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": false
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "customer_id"
+          ],
+          "unique": false
+        }
+      ],
+      "uniques": []
+    },
+    {
+      "name": "OrderItem",
+      "created_at": false,
+      "updated_at": false,
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "integer",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": false
+        },
+        {
+          "name": "product_id",
+          "type": "integer",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": false
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "price",
+          "type": "decimal",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "order_id"
+          ],
+          "unique": false
+        },
+        {
+          "fields": [
+            "product_id"
+          ],
+          "unique": false
+        }
+      ],
+      "uniques": []
+    }
+  ],
+  "relationships": [
+    {
+      "from": "Customer",
+      "to": "Order",
+      "type": "OneToMany"
+    },
+    {
+      "from": "Order",
+      "to": "OrderItem",
+      "type": "OneToMany"
+    },
+    {
+      "from": "Product",
+      "to": "OrderItem",
+      "type": "OneToMany"
+    }
+  ],
+  "_removedEntities": []
+}
